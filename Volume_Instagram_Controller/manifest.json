@@ -1,0 +1,20 @@
+{
+	"manifest_version": 2,
+
+	"name": "Instagram Volume Controller",
+	"version": "2.0",
+	"description": "Ajuste o volume de vídeos do Instagram com mais praticidade. By @P4ulo_r",
+
+	"browser_action": {
+		"default_icon": "128.png"
+	},
+
+	"icons": { 
+		"128": "128.png"
+	},
+
+	"content_scripts": [{
+		"matches": ["https://www.instagram.com/*"],
+		"js": ["instagram_volume_controller.js"]
+	}]
+}
