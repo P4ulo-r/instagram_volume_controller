@@ -1,20 +1,26 @@
 {
-	"manifest_version": 2,
+	"manifest_version": 3,
 
 	"name": "Instagram Volume Controller",
-	"version": "2.0",
-	"description": "Ajuste o volume de vídeos do Instagram com mais praticidade. By @P4ulo_r",
+	"version": "3.1",
+	"description": "Modificador de volume em vídeos e stories do Instagram. Tenha controles em vídeos! By @P4ulo_r",
 
-	"browser_action": {
+	"action": {
 		"default_icon": "128.png"
 	},
 
-	"icons": { 
+	"icons": {
 		"128": "128.png"
 	},
+	
+	"permissions": [
+		"contextMenus"
+	],
 
-	"content_scripts": [{
-		"matches": ["https://www.instagram.com/*"],
-		"js": ["instagram_volume_controller.js"]
-	}]
+	"content_scripts": [
+		{
+			"matches": ["https://www.instagram.com/*"],
+			"js": ["instagram_volume_controller.js"]
+		}
+	]
 }

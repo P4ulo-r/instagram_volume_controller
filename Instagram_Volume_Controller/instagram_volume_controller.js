@@ -1,69 +1,82 @@
-// Verificação e armazenamento em localStorage
-if(localStorage.getItem("instagram_volume") === null){
-	localStorage.setItem("instagram_volume", "1.0");
+// Check localStorage
+if(localStorage.getItem('instagram_volume') === null){
+	localStorage.setItem('instagram_volume', '1.0');
 }
 
-// Método para criar atributos
+// Function Apply Attrs
 function setAttributes(elem, attrs){
 	for(var key in attrs){
 		elem.setAttribute(key, attrs[key]);
 	}
 }
 
-// Interface
-const controls = document.createElement('div');
-setAttributes(controls, {
-	"id": "ivc-controls",
-	"style": "position:fixed; top:0; right:0; border-bottom-left-radius: 5px; width:75px; max-height:250px; background-color:rgba(0,0,0,0.75); z-index:9999; display:none;"
-});
-
-const controlVolume = document.createElement('input');
-setAttributes(controlVolume, {
-	"id": "ivc-volume",
-	"type": "range",
-	"min": "0.00",
-	"max": "1.00",
-	"step": "0.001",
-	"style": "-webkit-appearance:slider-vertical; margin:15px 25px; width:25px; height:170px; display:block;",
-	"value": localStorage.getItem("instagram_volume")
-});
-
-const displayVolume = document.createElement('p');
-setAttributes(displayVolume, {
-	"id": "ivc-display",
-	"style": "margin:15px auto; font-size:20px; color:#FFF; text-align:center;"
-});
-
-document.body.appendChild(controls);
-const ivcControls = document.getElementById("ivc-controls");
-ivcControls.appendChild(controlVolume);
-ivcControls.appendChild(displayVolume);
-
-// Toggle
-document.body.onkeypress = function(){
-	if(event.key == "'"){
-		if(ivcControls.style.display === "none"){
-			ivcControls.style.display = "block";
-		}else{
-			ivcControls.style.display = "none";
-		}
-	}
-};
-
-// Update Volume
-function UpdateVolume(){
-	const ivcVolume = document.getElementById("ivc-volume");
-	const ivcDisplay = document.getElementById("ivc-display");
-	const instagramVideos = document.querySelectorAll("video");
-	
-	localStorage.setItem("instagram_volume", String(ivcVolume.value));
-
-	for(var i=0; i<instagramVideos.length; i++){
-		instagramVideos[i].volume = parseFloat(localStorage.getItem("instagram_volume"));
-	}
-
-	ivcDisplay.innerHTML = String(Math.floor(parseFloat(localStorage.getItem("instagram_volume")) * 100));
+// Function Hot key Interface
+function Hotkey(){
+	const ivcControls = document.querySelector('#ivc-controls');
+	ivcControls.style.display = ivcControls.style.display === 'none' ? 'block' : 'none';
 }
 
-UpdateVolume();
-setInterval(function(){ UpdateVolume(); }, 100);
+// Create Document
+const elements = [document.createElement('div'), document.createElement('input'), document.createElement('p')];
+
+setAttributes(elements[0], {
+	'id': 'ivc-controls',
+	'style': 'position: fixed; top: 100px; right: 0; border-bottom-left-radius: 5px; width: 75px; max-height: 250px; background-color: rgba(0, 0, 0, 0.75); z-index: 9999; display: none;'
+});
+
+setAttributes(elements[1], {
+	'id': 'ivc-volume',
+	'type': 'range',
+	'min': '0.00',
+	'max': '1.00',
+	'step': '0.001',
+	'style': 'writing-mode: vertical-rl; margin: 15px 25px; width: 25px; height: 170px; display: block; cursor: pointer;',
+	'value': localStorage.getItem('instagram_volume')
+});
+
+setAttributes(elements[2], {
+	'id': 'ivc-display',
+	'style': 'margin: 15px auto; font-size: 20px; color: #FFFFFF; text-align: center;'
+});
+
+document.body.appendChild(elements[0]);
+const ivcControls = document.querySelector('#ivc-controls');
+ivcControls.appendChild(elements[1]);
+ivcControls.appendChild(elements[2]);
+
+// Event
+document.body.addEventListener('keypress', (e) => {
+	if(e.key === "'")
+		Hotkey();
+});
+
+// Loop Function
+function Loop(){	
+	localStorage.setItem('instagram_volume', String(document.querySelector('#ivc-volume').value));
+
+	document.querySelectorAll('video').forEach(e => {
+		e.volume = parseFloat(localStorage.getItem('instagram_volume'));
+		e.controls = true;
+		e.loop = true;
+		e.muted = ivcControls.style.display === 'none';
+	});
+
+	document.querySelector('#ivc-display').innerHTML = String(Math.floor(parseFloat(localStorage.getItem('instagram_volume')) * 100));
+
+	document.querySelectorAll('[data-visualcompletion]').forEach(e => e.remove());
+}
+
+// Set Loop
+setInterval(Loop, 100);
+
+// Menu Context
+const handleContextMenus = () => {
+	chrome.contextMenus.removeAll();
+	chrome.contextMenus.create({
+		title: 'Controle de Volume do Instagram',
+		id: 'IVCCM',
+		contexts: ['all']
+	});
+
+	chrome.contextMenus.onClicked.addListener(Hotkey);
+};
