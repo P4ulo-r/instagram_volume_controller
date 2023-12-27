@@ -20,7 +20,8 @@ function Hotkey(){
 const elements = [document.createElement('div'), document.createElement('input'), document.createElement('p')];
 
 setAttributes(elements[0], {
-	'id': 'ivc-controls'
+	'id': 'ivc-controls',
+	'style': 'display: none;'
 });
 
 setAttributes(elements[1], {
