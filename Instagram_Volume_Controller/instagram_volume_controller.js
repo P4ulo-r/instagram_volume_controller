@@ -20,8 +20,7 @@ function Hotkey(){
 const elements = [document.createElement('div'), document.createElement('input'), document.createElement('p')];
 
 setAttributes(elements[0], {
-	'id': 'ivc-controls',
-	'style': 'position: fixed; top: 100px; right: 0; border-bottom-left-radius: 5px; width: 75px; max-height: 250px; background-color: rgba(0, 0, 0, 0.75); z-index: 9999; display: none;'
+	'id': 'ivc-controls'
 });
 
 setAttributes(elements[1], {
@@ -30,13 +29,11 @@ setAttributes(elements[1], {
 	'min': '0.00',
 	'max': '1.00',
 	'step': '0.001',
-	'style': 'writing-mode: vertical-rl; margin: 15px 25px; width: 25px; height: 170px; display: block; cursor: pointer;',
 	'value': localStorage.getItem('instagram_volume')
 });
 
 setAttributes(elements[2], {
-	'id': 'ivc-display',
-	'style': 'margin: 15px auto; font-size: 20px; color: #FFFFFF; text-align: center;'
+	'id': 'ivc-display'
 });
 
 document.body.appendChild(elements[0]);
@@ -50,8 +47,8 @@ document.body.addEventListener('keypress', (e) => {
 		Hotkey();
 });
 
-// Loop Function
-function Loop(){	
+// Set Loop
+setInterval(() => {	
 	localStorage.setItem('instagram_volume', String(document.querySelector('#ivc-volume').value));
 
 	document.querySelectorAll('video').forEach(e => {
@@ -61,13 +58,13 @@ function Loop(){
 		e.muted = ivcControls.style.display === 'none';
 	});
 
-	document.querySelector('#ivc-display').innerHTML = String(Math.floor(parseFloat(localStorage.getItem('instagram_volume')) * 100));
+	document.querySelector('#ivc-display').innerHTML = `${String(Math.floor(parseFloat(localStorage.getItem('instagram_volume')) * 100))}%`;
 
-	document.querySelectorAll('[data-visualcompletion]').forEach(e => e.remove());
-}
-
-// Set Loop
-setInterval(Loop, 100);
+	document.querySelectorAll('[data-visualcompletion]').forEach((e) => {
+		if(e.querySelector('div > div > div[aria-label="Reproduzir"]'))
+			e.remove();
+	});
+}, 100);
 
 // Menu Context
 const handleContextMenus = () => {

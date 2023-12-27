@@ -1,0 +1,105 @@
+#ivc-controls, #ivc-volume, #ivc-display{
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+#ivc-controls{
+    position: fixed;
+    top: 62.5px;
+    right: 12.5px;
+    border-radius: 75px;
+    padding: 15px 10px;
+    width: 50px;
+    background-color: #161625;
+    -webkit-box-shadow: inset 0 0 6px rgba(253, 29, 29, 0.1),
+            inset 0 0 8px rgba(225, 48, 108, 0.1),
+            inset 0 0 20px rgba(193, 53, 132, 0.1),
+            inset 0 0 24px rgba(131, 58, 180, 0.1),
+            inset 0 0 32px rgba(88, 81, 219, 0.1),
+            inset 0 0 40px rgba(64, 93, 230, 0.1);
+            box-shadow: inset 0 0 6px rgba(253, 29, 29, 0.1),
+            inset 0 0 8px rgba(225, 48, 108, 0.1),
+            inset 0 0 20px rgba(193, 53, 132, 0.1),
+            inset 0 0 24px rgba(131, 58, 180, 0.1),
+            inset 0 0 32px rgba(88, 81, 219, 0.1),
+            inset 0 0 40px rgba(64, 93, 230, 0.1);
+    z-index: 9999;
+    display: none;
+}
+
+#ivc-volume{
+    margin: 0 auto;
+    margin-bottom: 15px;
+    width: 10px;
+    height: 150px;
+    -webkit-writing-mode: vertical-rl;
+        -ms-writing-mode: tb-rl;
+            writing-mode: vertical-rl;
+    display: block;
+    cursor: pointer;
+}
+
+#ivc-display{
+    font-size: 0.75rem;
+    color: #FFFFFF;
+    text-align: center;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+}
+
+input[type="range"]{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+         appearance: none;    
+    width: 250px;
+    background: transparent;
+    cursor: pointer;
+}
+  
+input[type="range"]:focus{
+    outline: none;
+}
+
+input[type="range"]::-webkit-slider-runnable-track{
+    border-radius: 10px;
+    height: 10px;
+    background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+}
+  
+input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance: none; 
+    appearance: none;
+    border-radius: 5px;
+    margin-top: -2.5px;
+    background-color: #CCCCCC;
+    width: 10px;
+    height: 10px;
+}
+  
+input[type="range"]:focus::-webkit-slider-thumb{
+    outline: 1px solid #CCCCCC;
+    outline-offset: 0.125rem;
+}
+  
+input[type="range"]::-moz-range-track{
+    border-radius: 10px;
+    height: 10px;
+    background-color: #EEEEEE;
+}
+
+input[type="range"]::-moz-range-thumb{
+    border: none;
+    border-radius: 5px;
+    width: 10px;
+    height: 10px;
+    background-color: #CCCCCC;
+}
+
+input[type="range"]:focus::-moz-range-thumb{
+    outline: 1px solid #CCCCCC;
+    outline-offset: 0.125rem;
+}
