@@ -1,4 +1,4 @@
-# instagram_volume_controller
+# v3.2 Instagram Volume Controller - By @P4ulo_r
 Modificador de volume em vídeos e stories do Instagram. Tenha controles em vídeos!
 
 ### Como usar?
